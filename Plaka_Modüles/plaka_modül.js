@@ -1,7 +1,6 @@
 (() => {
 	const textEl = document.getElementById('plateText');
 	const bandEl = document.getElementById('plateBand');
-	const textInput = document.getElementById('plateTextInput');
 	const textColorInput = document.getElementById('textColorInput');
 	const alignButtons = Array.from(document.querySelectorAll('.align-btn'));
 	const plateTop = document.querySelector('.plate-top');
@@ -16,15 +15,14 @@
 	}
 
 	function updatePreview() {
-		const t = sanitizeText(textInput.value);
-		textEl.textContent = t || 'PLAKALIK YAZISI GİR';
-		bandEl.style.setProperty('--text-color', textColorInput.value || '#ffffff');
+		const t = sanitizeText(textEl?.textContent);
+		if (textEl) textEl.textContent = (t || '').toUpperCase();
+		if (bandEl) bandEl.style.setProperty('--text-color', textColorInput?.value || '#ffffff');
 	}
 
 	// Event bindings
 	['input', 'change'].forEach(evt => {
-		textInput.addEventListener(evt, updatePreview);
-		textColorInput.addEventListener(evt, updatePreview);
+		textColorInput?.addEventListener(evt, updatePreview);
 	});
 
 		// Hizalama
@@ -52,4 +50,22 @@
 		
 		});
 		updateIcons();
+
+	// Alt plaka üzerinde doğrudan yazma: satır sonunu engelle, uzunluğu sınırla
+	const MAX_LEN = 32;
+	textEl?.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
+	textEl?.addEventListener('input', () => {
+		let t = sanitizeText(textEl.textContent).toUpperCase();
+		if (t.length > MAX_LEN) t = t.slice(0, MAX_LEN);
+		textEl.textContent = t;
+		// caret'i sona taşı
+		const r = document.createRange();
+		r.selectNodeContents(textEl);
+		r.collapse(false);
+		const sel = window.getSelection();
+		sel.removeAllRanges();
+		sel.addRange(r);
+	});
+
+	bandEl?.addEventListener('click', () => textEl?.focus());
 })();

@@ -40,7 +40,7 @@
 						<div class="plate-bottom" aria-live="polite">
 							<div id="plateBand" class="plate-band" style="--band-bg: #000000; --text-color: #ffffff; --icon-size: 28px;">
 								<span id="iconLeft" class="plate-icon" aria-hidden="true"></span>
-								<span id="plateText" class="plate-text">PLAKALIK YAZISI GİR</span>
+								<span id="plateText" class="plate-text" contenteditable="true" role="textbox" aria-label="Plaka yazısı düzenle" data-placeholder="PLAKALIK YAZISI GİR" spellcheck="false"></span>
 								<span id="iconRight" class="plate-icon" aria-hidden="true"></span>
 							</div>
 						</div>
@@ -50,10 +50,7 @@
 					<section class="controls" aria-labelledby="controls-title">
 				<h2 id="controls-title" class="sr-only">Tasarım Kontrolleri</h2>
 
-				<div class="form-field">
-					<label for="plateTextInput">Plaka Yazısı</label>
-					<input id="plateTextInput" type="text" placeholder="Plakalık yazısı yazın" maxlength="32" />
-				</div>
+				<!-- Plaka Yazısı inputu kaldırıldı; yazma doğrudan alt plaka üzerinde yapılır -->
 
 
 				<div class="form-field">

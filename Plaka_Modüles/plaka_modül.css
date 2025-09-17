@@ -27,7 +27,7 @@ body {
 }
 
 .plate-builder {
-	display: grid;
+	
 	gap: 1.25rem;
 	padding: clamp(12px, 2.5vw, 28px);
 	max-width: var(--max-content-width);
@@ -37,7 +37,8 @@ body {
 /* Önizleme Alanı */
 .preview {
 	display: grid;
-	gap: 12px;
+	
+	
 }
 
 .plate-top {
@@ -81,6 +82,14 @@ body {
 	text-align: center;
 	word-break: break-word;
 }
+
+/* contenteditable placeholder + odak stili */
+.plate-text[contenteditable="true"]:empty:before {
+	content: attr(data-placeholder);
+	opacity: 0.6;
+}
+.plate-text[contenteditable="true"] { outline: none; cursor: text; }
+.plate-text[contenteditable="true"]:focus { box-shadow: 0 0 0 2px rgba(0,0,0,0.15) inset; border-radius: 6px; }
 
 .plate-icon {
 	font-size: var(--icon-size);
