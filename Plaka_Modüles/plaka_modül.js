@@ -6,8 +6,8 @@
 	const plateTop = document.querySelector('.plate-top');
 		const iconLeft = document.getElementById('iconLeft');
 		const iconRight = document.getElementById('iconRight');
-		const iconLeftSelect = document.getElementById('iconLeftSelect');
-		const iconRightSelect = document.getElementById('iconRightSelect');
+	// Button tabanlı kontroller
+	const choiceButtons = Array.from(document.querySelectorAll('.choice-btn'));
 
 	function sanitizeText(str) {
 		// Basit temizlik: Çoklu boşlukları tek boşluğa indir, 32 karakter üstünü input zaten kesiyor
@@ -21,9 +21,7 @@
 	}
 
 	// Event bindings
-	['input', 'change'].forEach(evt => {
-		textColorInput?.addEventListener(evt, updatePreview);
-	});
+	['input', 'change'].forEach(evt => { textColorInput?.addEventListener(evt, updatePreview); });
 
 		// Hizalama
 		function setAlignment(pos) {
@@ -38,18 +36,27 @@
 	updatePreview();
 		setAlignment('center');
 
-		// İkon kontrolleri
-		function updateIcons() {
-			iconLeft.textContent = iconLeftSelect?.value || '';
-			iconRight.textContent = iconRightSelect?.value || '';
-			
+	// Choice button davranışı (renk ve ikonlar)
+	function setActiveInGroup(group, btn) {
+		choiceButtons.filter(b => b.dataset.group === group)
+			.forEach(b => b.classList.toggle('active', b === btn));
+	}
+
+	function handleChoiceClick(e) {
+		const btn = e.currentTarget;
+		const group = btn.dataset.group;
+		const value = btn.dataset.value ?? '';
+		setActiveInGroup(group, btn);
+		if (group === 'text-color') {
+			bandEl.style.setProperty('--text-color', value || '#ffffff');
+		} else if (group === 'icon-left') {
+			iconLeft.textContent = value;
+		} else if (group === 'icon-right') {
+			iconRight.textContent = value;
 		}
-		['change', 'input'].forEach(evt => {
-			iconLeftSelect?.addEventListener(evt, updateIcons);
-			iconRightSelect?.addEventListener(evt, updateIcons);
-		
-		});
-		updateIcons();
+	}
+
+	choiceButtons.forEach(btn => btn.addEventListener('click', handleChoiceClick));
 
 	// Alt plaka üzerinde doğrudan yazma: satır sonunu engelle, uzunluğu sınırla
 	const MAX_LEN = 32;
@@ -68,4 +75,40 @@
 	});
 
 	bandEl?.addEventListener('click', () => textEl?.focus());
+
+	// Toolbar inline görünür; toggle mantığı kaldırıldı
+
+	// Her kontrol için açılır menü toggle
+	const controls = Array.from(document.querySelectorAll('.control'));
+	function closeAllMenus(except) {
+		controls.forEach(ctrl => {
+			if (ctrl === except) return;
+			const toggle = ctrl.querySelector('.control-toggle');
+			const menu = ctrl.querySelector('.control-menu');
+			if (toggle && menu) {
+				toggle.setAttribute('aria-expanded', 'false');
+				menu.setAttribute('aria-hidden', 'true');
+				menu.hidden = true;
+			}
+		});
+	}
+	controls.forEach(ctrl => {
+		const toggle = ctrl.querySelector('.control-toggle');
+		const menu = ctrl.querySelector('.control-menu');
+		if (!toggle || !menu) return;
+		menu.setAttribute('aria-hidden', 'true');
+		toggle.addEventListener('click', (e) => {
+			e.stopPropagation();
+			const expanded = toggle.getAttribute('aria-expanded') === 'true';
+			closeAllMenus(ctrl);
+			toggle.setAttribute('aria-expanded', String(!expanded));
+			menu.hidden = expanded;
+			menu.setAttribute('aria-hidden', expanded ? 'true' : 'false');
+		});
+	});
+
+	// Dışarı tıklayınca kapat
+	document.addEventListener('click', () => closeAllMenus());
+	// ESC ile kapat
+	document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAllMenus(); });
 })();

@@ -34,65 +34,84 @@
 									<circle cx="820" cy="240" r="14"/>
 								</g>
 							</svg>
-						</div>
-
-				<!-- ALT ALAN: Yazı şeridi (renk ve yazı kontrol edilebilir) -->
-						<div class="plate-bottom" aria-live="polite">
-							<div id="plateBand" class="plate-band" style="--band-bg: #000000; --text-color: #ffffff; --icon-size: 28px;">
-								<span id="iconLeft" class="plate-icon" aria-hidden="true"></span>
-								<span id="plateText" class="plate-text" contenteditable="true" role="textbox" aria-label="Plaka yazısı düzenle" data-placeholder="PLAKALIK YAZISI GİR" spellcheck="false"></span>
-								<span id="iconRight" class="plate-icon" aria-hidden="true"></span>
+							<!-- ALT ALAN: Artık üst plakanın üzerinde, en alta sabitlenmiş -->
+							<div class="plate-bottom overlay" aria-live="polite">
+								<div id="plateBand" class="plate-band" style="--band-bg: #000000; --text-color: #ffffff; --icon-size: 28px;">
+									<span id="iconLeft" class="plate-icon" aria-hidden="true"></span>
+									<span id="plateText" class="plate-text" contenteditable="true" role="textbox" aria-label="Plaka yazısı düzenle" data-placeholder="PLAKALIK YAZISI GİR" spellcheck="false"></span>
+									<span id="iconRight" class="plate-icon" aria-hidden="true"></span>
+								</div>
 							</div>
 						</div>
 			</section>
 
 			<!-- Kontroller: Yazı ve renkler -->
-					<section class="controls" aria-labelledby="controls-title">
-				<h2 id="controls-title" class="sr-only">Tasarım Kontrolleri</h2>
-
-				<!-- Plaka Yazısı inputu kaldırıldı; yazma doğrudan alt plaka üzerinde yapılır -->
-
-
-				<div class="form-field">
-					<label for="textColorInput">Yazı Rengi</label>
-					<input id="textColorInput" type="color" value="#ffffff" />
-				</div>
-
-						<div class="form-field">
-							<span>Hizalama</span>
-							<div class="align-group" role="group" aria-label="Hizalama seçenekleri">
-								<button type="button" class="align-btn" data-align="left" aria-label="Sola hizala">Sola</button>
-								<button type="button" class="align-btn" data-align="center" aria-label="Ortaya hizala">Orta</button>
-								<button type="button" class="align-btn" data-align="right" aria-label="Sağa hizala">Sağa</button>
+					<section class="controls controls-menu" aria-label="Tasarım Kontrolleri">
+						<!-- Her kontrol için kendi toggle butonu ve açılan menü -->
+						<div class="control" data-control="align">
+							<button type="button" class="control-toggle" aria-haspopup="true" aria-expanded="false">Hizalama</button>
+							<div class="control-menu" role="menu" hidden>
+								<button type="button" class="align-btn" data-align="left" role="menuitem">Sola</button>
+								<button type="button" class="align-btn" data-align="center" role="menuitem">Orta</button>
+								<button type="button" class="align-btn" data-align="right" role="menuitem">Sağa</button>
 							</div>
 						</div>
 
-						<div class="form-field">
-							<label for="iconLeftSelect">Sol Şekil</label>
-							<select id="iconLeftSelect">
-								<option value="">Yok</option>
-								<option value="👉" selected>👉</option>
-								<option value="⭐">⭐</option>
-								<option value="🔥">🔥</option>
-								<option value="❤️">❤️</option>
-								<option value="⚡">⚡</option>
-								<option value="🇹🇷">🇹🇷</option>
-							</select>
+						<div class="control" data-control="text-color">
+							<button type="button" class="control-toggle" aria-haspopup="true" aria-expanded="false">Yazı Rengi</button>
+							<div class="control-menu" role="menu" hidden>
+								<div class="choice-group" aria-label="Yazı rengi">
+									<button type="button" class="choice-btn color active" data-group="text-color" data-value="#ffffff" style="--swatch:#ffffff" aria-pressed="true" title="Beyaz" role="menuitem"></button>
+									<button type="button" class="choice-btn color" data-group="text-color" data-value="#ffdd00" style="--swatch:#ffdd00" title="Sarı" role="menuitem"></button>
+									<button type="button" class="choice-btn color" data-group="text-color" data-value="#ff3b3b" style="--swatch:#ff3b3b" title="Kırmızı" role="menuitem"></button>
+									<button type="button" class="choice-btn color" data-group="text-color" data-value="#00e676" style="--swatch:#00e676" title="Yeşil" role="menuitem"></button>
+									<button type="button" class="choice-btn color" data-group="text-color" data-value="#00b0ff" style="--swatch:#00b0ff" title="Mavi" role="menuitem"></button>
+								</div>
+							</div>
 						</div>
 
-						<div class="form-field">
-							<label for="iconRightSelect">Sağ Şekil</label>
-							<select id="iconRightSelect">
-								<option value="">Yok</option>
-								<option value="👈" selected>👈</option>
-								<option value="⭐">⭐</option>
-								<option value="🔥">🔥</option>
-								<option value="❤️">❤️</option>
-								<option value="⚡">⚡</option>
-								<option value="🇹🇷">🇹🇷</option>
-							</select>
+						<div class="control" data-control="icon-left">
+							<button type="button" class="control-toggle" aria-haspopup="true" aria-expanded="false">Sol Şekil</button>
+							<div class="control-menu" role="menu" hidden>
+								<div class="choice-group" aria-label="Sol şekil">
+									<button type="button" class="choice-btn icon active" data-group="icon-left" data-value="👉" aria-pressed="true" role="menuitem">👉</button>
+									<button type="button" class="choice-btn icon" data-group="icon-left" data-value="⭐" role="menuitem">⭐</button>
+									<button type="button" class="choice-btn icon" data-group="icon-left" data-value="🔥" role="menuitem">🔥</button>
+									<button type="button" class="choice-btn icon" data-group="icon-left" data-value="❤️" role="menuitem">❤️</button>
+									<button type="button" class="choice-btn icon" data-group="icon-left" data-value="⚡" role="menuitem">⚡</button>
+									<button type="button" class="choice-btn icon" data-group="icon-left" data-value="" role="menuitem">Yok</button>
+								</div>
+							</div>
 						</div>
 
+						<div class="control" data-control="icon-right">
+							<button type="button" class="control-toggle" aria-haspopup="true" aria-expanded="false">Sağ Şekil</button>
+							<div class="control-menu" role="menu" hidden>
+								<div class="choice-group" aria-label="Sağ şekil">
+									<button type="button" class="choice-btn icon active" data-group="icon-right" data-value="👈" aria-pressed="true" role="menuitem">👈</button>
+									<button type="button" class="choice-btn icon" data-group="icon-right" data-value="⭐" role="menuitem">⭐</button>
+									<button type="button" class="choice-btn icon" data-group="icon-right" data-value="🔥" role="menuitem">🔥</button>
+									<button type="button" class="choice-btn icon" data-group="icon-right" data-value="❤️" role="menuitem">❤️</button>
+									<button type="button" class="choice-btn icon" data-group="icon-right" data-value="⚡" role="menuitem">⚡</button>
+									<button type="button" class="choice-btn icon" data-group="icon-right" data-value="" role="menuitem">Yok</button>
+								</div>
+							</div>
+						</div>
+
+						<!-- sadece html buton başlığı ekledim, css ve js eklemedim -->
+						<div class="control" data-control="font-family">
+							<button type="button" class="control-toggle" aria-haspopup="true" aria-expanded="false">Yazı Tipi</button>
+							<div class="control-menu" role="menu" hidden>
+								<div class="choice-group" aria-label="Yazı tipi">
+									<button type="button" class="choice-btn icon active" data-group="font-family" data-value="Arial" aria-pressed="true" role="menuitem">Arial</button>
+									</div>
+							</div>
+						</div>
+						
+					</section>
+					
+					
+					</section>
 			</section>
 		</main>
 

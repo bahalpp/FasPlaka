@@ -47,6 +47,7 @@ body {
 	background: #1a1a1b;
 	border-radius: var(--radius-lg);
 	overflow: hidden;
+	position: relative; /* overlay için */
 	display: grid;
 	place-items: center;
 	box-shadow: var(--shadow-md);
@@ -54,8 +55,13 @@ body {
 
 
 
-.plate-bottom {
-	width: 100%;
+.plate-bottom { width: 100%; }
+.plate-bottom.overlay {
+	position: absolute;
+	left: 0; right: 0; bottom: 0;
+	padding: clamp(0px, 1vw, 0px);
+	background: transparent;
+	line-height: 15px;
 }
 
 .plate-band {
@@ -65,7 +71,7 @@ body {
 	--icon-size: 28px;
 	background: var(--band-bg);
 	color: var(--text-color);
-	min-height: clamp(56px, 9vw, 92px);
+	min-height: clamp(40px, 7vw, 84px);
 	border-radius: var(--radius-md);
 	display: flex;
 	align-items: center;
@@ -108,43 +114,71 @@ body {
 	box-shadow: var(--shadow-md);
 }
 
-.form-field {
-	display: grid;
-	gap: 6px;
+/* Menü tabanlı kontroller */
+.controls.controls-menu {
+	margin-top: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 225px;
+	align-items: center;
+	
 }
 
-.form-field label {
-	font-size: 0.95rem;
-	color: #cfcfcf;
-}
-
-.form-field input[type="text"] {
-	width: 100%;
-	padding: 10px 12px;
-	border-radius: 10px;
-	border: 1px solid #2a2a2b;
-	background: #0e0e0f;
-	color: #fafafa;
-}
-
-.form-field input[type="color"] {
-	width: 100%;
-	height: 40px;
-	padding: 0;
-	border-radius: 10px;
-	border: 1px solid #2a2a2b;
-	background: #0e0e0f;
-}
-
-.form-field select,
-.form-field input[type="range"] {
-	width: 100%;
+.control { position: relative; }
+.control-toggle {
 	padding: 10px 12px;
 	border-radius: 10px;
 	border: 1px solid #2a2a2b;
 	background: #0e0e0f;
 	color: #eaeaea;
+	cursor: pointer;
 }
+.control-toggle[aria-expanded="true"] { border-color: #3f76ff; box-shadow: 0 0 0 2px rgba(63,118,255,0.2) inset; }
+
+.control-menu {
+	position: absolute;
+	top: calc(100% + 6px);
+	left: 0;
+	z-index: 10;
+	min-width: 220px;
+	padding: 10px;
+	border-radius: 12px;
+	background: #0f0f10;
+	border: 1px solid #2a2a2b;
+	box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+	opacity: 0;
+	transform: translateY(-4px);
+	pointer-events: none;
+	transition: opacity .18s ease, transform .18s ease;
+}
+.control-menu[aria-hidden="false"] {
+	opacity: 1;
+	transform: translateY(0);
+	pointer-events: auto;
+}
+
+.controls-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 10px 12px;
+	border-radius: 10px;
+	border: 1px solid #2a2a2b;
+	background: #0e0e0f;
+	color: #eaeaea;
+	cursor: pointer;
+}
+.controls-toggle[aria-expanded="true"] { border-color: #3f76ff; box-shadow: 0 0 0 2px rgba(63,118,255,0.2) inset; }
+
+.controls-content {
+	overflow: hidden;
+	transition: grid-template-rows .25s ease, opacity .2s ease;
+	display: grid;
+	grid-template-rows: 0fr;
+	opacity: 0;
+}
+.controls-content[aria-hidden="false"] { grid-template-rows: 1fr; opacity: 1; }
+.controls-content > * { min-height: 0; }
 
 .align-group {
 	display: grid;
@@ -161,8 +195,42 @@ body {
 	cursor: pointer;
 }
 
-.align-btn:hover { background: #151516; }
-.align-btn.active { border-color: #3f76ff; box-shadow: 0 0 0 2px rgba(63,118,255,0.2) inset; }
+
+/* Choice groups (renk ve ikon butonları) */
+.choice-group {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.choice-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 40px;
+	border-radius: 10px;
+	border: 1px solid #2a2a2b;
+	background: #0e0e0f;
+	color: #eaeaea;
+	cursor: pointer;
+}
+.choice-btn:hover { background: #151516; }
+.choice-btn.active { border-color: #3f76ff; box-shadow: 0 0 0 2px rgba(63,118,255,0.2) inset; }
+
+/* Renk butonları küçük swatch şeklinde */
+.choice-btn.color { padding: 0; }
+.choice-btn.color::before {
+	content: '';
+	width: 24px; height: 24px;
+	border-radius: 6px;
+	background: var(--swatch, #fff);
+	box-shadow: inset 0 0 0 1px rgba(0,0,0,0.25);
+}
+
+/* Ikon butonları */
+.choice-btn.icon { font-size: 20px; }
+
+/* Küçük ekranlarda butonlar satır satır kayar (wrap) - ek ayar gerekmez */
 
 /* Daha geniş ekranlarda düzeni yan yana yapabiliriz */
 @media (min-width: 920px) {
