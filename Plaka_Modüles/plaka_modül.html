@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="tr">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Plakalık Tasarım Modülü</title>
+		<link rel="stylesheet" href="plaka_modül.css" />
+	</head>
+	<body>
+		<main class="plate-builder" role="main">
+			<!-- Önizleme Alanı: Üstte sabit plaka resmi, altta yazı şeridi -->
+			<section class="preview" aria-labelledby="preview-title">
+				<h1 id="preview-title" class="sr-only">Plakalık Önizleme</h1>
+
+				<!-- ÜST BÜYÜK ALAN: Sabit plaka resmi (inline SVG ile gömülü) -->
+								<div class="plate-top" aria-label="Sabit plaka alanı">
+							<svg class="plate-svg" viewBox="0 0 1200 420" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img">
+								<defs>
+									<linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+										<stop offset="0%" stop-color="#2d2d2d"/>
+										<stop offset="100%" stop-color="#3a3a3a"/>
+									</linearGradient>
+								</defs>
+								<rect width="1200" height="420" rx="24" fill="url(#g)"/>
+								<g fill="none" stroke="#6d6d6d" stroke-width="10" stroke-linecap="round" opacity="0.9">
+									<path d="M80 120h300M80 160h300M80 200h300M80 240h300"/>
+									<path d="M820 120h300M820 160h300M820 200h300M820 240h300"/>
+									<rect x="450" y="270" width="120" height="50" rx="8"/>
+									<rect x="630" y="270" width="120" height="50" rx="8"/>
+								</g>
+								<g fill="#8a8a8a" opacity="0.9">
+									<circle cx="600" cy="160" r="14"/>
+									<circle cx="380" cy="240" r="14"/>
+									<circle cx="820" cy="240" r="14"/>
+								</g>
+							</svg>
+						</div>
+
+				<!-- ALT ALAN: Yazı şeridi (renk ve yazı kontrol edilebilir) -->
+						<div class="plate-bottom" aria-live="polite">
+							<div id="plateBand" class="plate-band" style="--band-bg: #000000; --text-color: #ffffff; --icon-size: 28px;">
+								<span id="iconLeft" class="plate-icon" aria-hidden="true"></span>
+								<span id="plateText" class="plate-text">PLAKALIK YAZISI GİR</span>
+								<span id="iconRight" class="plate-icon" aria-hidden="true"></span>
+							</div>
+						</div>
+			</section>
+
+			<!-- Kontroller: Yazı ve renkler -->
+					<section class="controls" aria-labelledby="controls-title">
+				<h2 id="controls-title" class="sr-only">Tasarım Kontrolleri</h2>
+
+				<div class="form-field">
+					<label for="plateTextInput">Plaka Yazısı</label>
+					<input id="plateTextInput" type="text" placeholder="Plakalık yazısı yazın" maxlength="32" />
+				</div>
+
+
+				<div class="form-field">
+					<label for="textColorInput">Yazı Rengi</label>
+					<input id="textColorInput" type="color" value="#ffffff" />
+				</div>
+
+						<div class="form-field">
+							<span>Hizalama</span>
+							<div class="align-group" role="group" aria-label="Hizalama seçenekleri">
+								<button type="button" class="align-btn" data-align="left" aria-label="Sola hizala">Sola</button>
+								<button type="button" class="align-btn" data-align="center" aria-label="Ortaya hizala">Orta</button>
+								<button type="button" class="align-btn" data-align="right" aria-label="Sağa hizala">Sağa</button>
+							</div>
+						</div>
+
+						<div class="form-field">
+							<label for="iconLeftSelect">Sol Şekil</label>
+							<select id="iconLeftSelect">
+								<option value="">Yok</option>
+								<option value="👉" selected>👉</option>
+								<option value="⭐">⭐</option>
+								<option value="🔥">🔥</option>
+								<option value="❤️">❤️</option>
+								<option value="⚡">⚡</option>
+								<option value="🇹🇷">🇹🇷</option>
+							</select>
+						</div>
+
+						<div class="form-field">
+							<label for="iconRightSelect">Sağ Şekil</label>
+							<select id="iconRightSelect">
+								<option value="">Yok</option>
+								<option value="👈" selected>👈</option>
+								<option value="⭐">⭐</option>
+								<option value="🔥">🔥</option>
+								<option value="❤️">❤️</option>
+								<option value="⚡">⚡</option>
+								<option value="🇹🇷">🇹🇷</option>
+							</select>
+						</div>
+
+			</section>
+		</main>
+
+		<script src="plaka_modül.js" defer></script>
+	</body>
+	</html>
