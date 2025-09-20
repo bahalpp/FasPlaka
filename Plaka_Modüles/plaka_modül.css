@@ -73,9 +73,9 @@ body {
 	color: var(--text-color);
 	min-height: clamp(40px, 7vw, 84px);
 	border-radius: var(--radius-md);
-	display: flex;
+	display: grid;
+	grid-template-columns: auto 1fr auto;
 	align-items: center;
-	justify-content: var(--content-justify);
 	padding: clamp(8px, 1.8vw, 16px);
 	box-shadow: var(--shadow-md);
 }
@@ -87,6 +87,8 @@ body {
 	font-size: clamp(18px, 4.6vw, 42px);
 	text-align: center;
 	word-break: break-word;
+	width: 100%;
+	min-width: 0;
 }
 
 /* contenteditable placeholder + odak stili */
@@ -101,6 +103,12 @@ body {
 	font-size: var(--icon-size);
 	line-height: 1;
 	margin: 0 clamp(8px, 1.4vw, 16px);
+}
+.plate-icon#iconLeft {
+	justify-self: start;
+}
+.plate-icon#iconRight {
+	justify-self: end;
 }
 
 /* Kontrol paneli */

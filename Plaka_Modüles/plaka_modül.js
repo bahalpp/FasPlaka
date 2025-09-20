@@ -166,4 +166,37 @@
 		clearTimeout(resizeTimer);
 		resizeTimer = setTimeout(() => closeAllMenus(), 120);
 	});
+
+// KAYDET BUTONU: Plaka bilgilerini JSON olarak console'a yazdırır
+document.getElementById('savePlateBtn')?.addEventListener('click', () => {
+	// Plaka metni
+	const text = textEl?.textContent || '';
+	// Aktif yazı rengi
+	const textColorBtn = document.querySelector('.choice-btn.color.active');
+	const textColor = textColorBtn?.dataset.value || '#ffffff';
+	// Bant arka plan rengi (şu an sabit, isterseniz ekleyebilirim)
+	const bandBg = bandEl?.style.getPropertyValue('--band-bg') || '#000000';
+	// Sol/Sağ ikon
+	const iconLeftVal = iconLeft?.textContent || '';
+	const iconRightVal = iconRight?.textContent || '';
+	// Hizalama
+	let align = 'center';
+	const alignBtn = document.querySelector('.align-btn.active');
+	if (alignBtn) align = alignBtn.dataset.align;
+	// Yazı tipi
+	let font = 'Arial';
+	const fontBtn = document.querySelector('.choice-btn[data-group="font-family"].active');
+	if (fontBtn) font = fontBtn.dataset.value;
+	// JSON objesi
+	const plateData = {
+		text,
+		textColor,
+		bandBg,
+		iconLeft: iconLeftVal,
+		iconRight: iconRightVal,
+		align,
+		font
+	};
+	console.log('Plaka Bilgileri:', JSON.stringify(plateData, null, 2));
+});
 })();
